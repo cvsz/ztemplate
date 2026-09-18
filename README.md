@@ -1,4 +1,4 @@
-# ztemplate
+# zTemplate
 
 A production-ready, reusable GitHub repository template for starting new projects with consistent engineering, security, documentation, automation, and release practices.
 
