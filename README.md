@@ -22,6 +22,17 @@ A production-ready, reusable GitHub repository template for starting new project
 - Environment example
 - Docker baseline
 - Makefile task entrypoints
+- Cloudflare and Terraform ownership contract
+
+## DNS and public hostnames
+
+Do not add Cloudflare Terraform to a project created from this template. Public
+DNS records and tunnel ingress must have exactly one owning repository, which is
+the only place they may be declared. Point this at whichever repository your
+organization uses for edge infrastructure. See
+[`docs/cloudflare-terraform.md`](docs/cloudflare-terraform.md) for how to
+request a hostname, why duplicates cause drift, and why the apply step must wait
+for the owning repository's pull request to merge.
 
 ## Start from this template
 
@@ -30,6 +41,8 @@ A production-ready, reusable GitHub repository template for starting new project
 3. Replace placeholder project metadata.
 4. Review and customize `.github/CODEOWNERS`, `SECURITY.md`, CI matrices, and release settings.
 5. Add language/framework-specific workflows only when the project needs them.
+6. If the project needs a public hostname, request it from the repository that
+   owns your edge infrastructure rather than adding Terraform here.
 
 ## Repository structure
 
