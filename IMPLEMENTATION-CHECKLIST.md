@@ -36,6 +36,19 @@ Use this checklist after creating a repository from `ztemplate`.
 - [ ] Replace or remove the placeholder Dockerfile.
 - [ ] Populate `.env.example` with safe non-secret keys only.
 
+## Cloudflare and DNS
+
+- [ ] Read `docs/cloudflare-terraform.md` before adding any hostname.
+- [ ] Do not create a per-project `infrastructure/terraform/cloudflare`; DNS
+      and tunnel ingress for `*.zeaz.dev` are owned by `zworkforce`.
+- [ ] Confirm the service answers on a loopback port before requesting a
+      hostname.
+- [ ] Declare the hostname in a `zworkforce` feature branch and open a pull
+      request from there.
+- [ ] Import an existing record rather than creating or deleting it.
+- [ ] Verify `terraform plan` reports `0 to destroy` before applying.
+- [ ] Re-check the other hostnames on the shared tunnel for regressions.
+
 ## CI/CD
 
 - [ ] Customize CI for the selected stack.

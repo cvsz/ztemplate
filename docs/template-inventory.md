@@ -27,6 +27,7 @@ This repository provides a secure, reusable baseline for new GitHub projects.
 - ROADMAP.md
 - IMPLEMENTATION-CHECKLIST.md
 - architecture, development, release, and ADR documentation
+- Cloudflare and Terraform ownership contract (`docs/cloudflare-terraform.md`)
 - Dockerfile, Makefile, environment example, EditorConfig, Git attributes, and Git ignore baseline
 
 ## Adoption checklist

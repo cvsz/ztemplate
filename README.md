@@ -22,6 +22,15 @@ A production-ready, reusable GitHub repository template for starting new project
 - Environment example
 - Docker baseline
 - Makefile task entrypoints
+- Cloudflare and Terraform ownership contract
+
+## DNS and public hostnames
+
+Do not add Cloudflare Terraform to a project created from this template. DNS
+records and tunnel ingress for `*.zeaz.dev` are owned by the `zworkforce`
+repository, which is the only place they may be declared. See
+[`docs/cloudflare-terraform.md`](docs/cloudflare-terraform.md) for how to
+request a hostname and why duplicates cause drift.
 
 ## Start from this template
 
@@ -30,6 +39,7 @@ A production-ready, reusable GitHub repository template for starting new project
 3. Replace placeholder project metadata.
 4. Review and customize `.github/CODEOWNERS`, `SECURITY.md`, CI matrices, and release settings.
 5. Add language/framework-specific workflows only when the project needs them.
+6. If the project needs a public hostname, request it in `zworkforce` rather than adding Terraform here.
 
 ## Repository structure
 
