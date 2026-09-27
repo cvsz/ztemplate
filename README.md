@@ -8,7 +8,7 @@ A reusable, security-oriented GitHub project starting point with governance, eng
 2. Preview the project initialization:
 
    ```bash
-   python3 scripts/bootstrap.py --name my-service --owner my-org --description 'New service'
+   python3 scripts/bootstrap.py --name my-service --owner my-org --codeowner my-org/maintainers --description 'New service'
    ```
 
 3. Run the same command with `--apply`, inspect `git diff`, and review `LICENSE`, `SECURITY.md`, `CODEOWNERS` and the [startup guide](docs/startup.md).
