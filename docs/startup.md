@@ -6,13 +6,13 @@ This repository is a language-agnostic governance and tooling baseline, not a de
 
 Requires Python 3.10+ and Git. Run first without --apply to preview exactly which four files will be updated:
 
-    python3 scripts/bootstrap.py --name my-service --owner my-org --description 'Describe the product'
+    python3 scripts/bootstrap.py --name my-service --owner my-org --codeowner my-org/maintainers --description 'Describe the product'
 
 Apply explicitly:
 
-    python3 scripts/bootstrap.py --name my-service --owner my-org --description 'Describe the product' --apply
+    python3 scripts/bootstrap.py --name my-service --owner my-org --codeowner my-org/maintainers --description 'Describe the product' --apply
 
-The command creates .ztemplate-initialized.json and edits only README.md, ABOUT.md, .github/CODEOWNERS, and .github/ISSUE_TEMPLATE/config.yml. Running again with identical arguments is a no-op; using different settings requires manual review. Run in a clean, new repository and review git diff before committing. If interrupted, inspect git diff and reset or repair manually before rerunning; changes are atomic per file but not a multi-file transaction.
+The command creates .ztemplate-initialized.json and edits only README.md, ABOUT.md, .github/CODEOWNERS, and .github/ISSUE_TEMPLATE/config.yml. CODEOWNERS must be an actual GitHub user or org/team with write access; repository owner alone is not sufficient for an organization. Running again with identical arguments is a no-op; using different settings requires manual review. Run in a clean, new repository and review git diff before committing. If interrupted, inspect git diff and reset or repair manually before rerunning; changes are atomic per file but not a multi-file transaction.
 
 ## 2. Required manual decisions
 
