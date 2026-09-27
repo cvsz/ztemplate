@@ -1,26 +1,15 @@
 SHELL := /bin/sh
 
-.PHONY: help setup format lint test build security ci
+.PHONY: help validate-template setup format lint test build security ci
 
 help:
-	@printf '%s\n' 'Targets: setup format lint test build security ci'
+	@printf '%s\n' 'Template: validate-template' 'Project (configure before use): setup format lint test build security ci' 'Bootstrap: python3 scripts/bootstrap.py --help'
 
-setup:
-	@echo 'Replace with project bootstrap command.'
+validate-template:
+	python3 -m unittest discover -s tests -v
 
-format:
-	@echo 'Replace with project formatter command.'
+setup format lint test build security:
+	@echo 'This is a template placeholder: implement this target for your actual project; do not treat it as a passing check.' >&2
+	@exit 2
 
-lint:
-	@echo 'Replace with project lint command.'
-
-test:
-	@echo 'Replace with project test command.'
-
-build:
-	@echo 'Replace with project build command.'
-
-security:
-	@echo 'Use repository security workflows and add stack-specific scanners.'
-
-ci: lint test build security
+ci: validate-template lint test build security
