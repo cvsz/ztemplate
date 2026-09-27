@@ -18,6 +18,12 @@ This repository is a reusable GitHub project template. Changes must remain gener
 ## Template placeholders
 Use obvious placeholders such as `PROJECT_NAME`, `OWNER`, `example.com`, and `REPLACE_ME`. Any generated repository must be able to find and replace placeholders without exposing secrets.
 
+## Review skill
+
+- Use [Scrutinize](.agents/skills/scrutinize/SKILL.md) when asked to review, audit, sanity-check, or give a second opinion on a plan, PR, diff, design, or code change, or when invoked with `/scrutinize` in a compatible agent.
+- Question whether the change is necessary or can be smaller before tracing real code paths and verifying behavioral claims. Cite concrete file/line evidence and distinguish unverified claims from confirmed behavior.
+- The skill guides agent behavior; it does not itself install a slash command or replace required tests, CI, or human review.
+
 ## Change workflow
 1. Inspect the current exact branch/head and existing files.
 2. Identify the smallest missing or inconsistent template capability.
