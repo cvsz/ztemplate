@@ -24,6 +24,13 @@ Use obvious placeholders such as `PROJECT_NAME`, `OWNER`, `example.com`, and `RE
 - Question whether the change is necessary or can be smaller before tracing real code paths and verifying behavioral claims. Cite concrete file/line evidence and distinguish unverified claims from confirmed behavior.
 - The skill guides agent behavior; it does not itself install a slash command or replace required tests, CI, or human review.
 
+## Project initialization
+
+- For a repository created with **Use this template**, follow [docs/startup.md](docs/startup.md) and preview `scripts/bootstrap.py` before `--apply`; pass an actual GitHub user or org/team via `--codeowner` and verify write access.
+- Do not present an initialized scaffold as a running or production-ready system; bootstrap changes project identity and ownership routing only.
+- Replace Makefile and Dockerfile placeholders with actual project-specific commands and images before enabling an application delivery pipeline.
+- Never overwrite existing application code, production secrets, DNS ownership or original license attribution during initialization.
+
 ## Change workflow
 1. Inspect the current exact branch/head and existing files.
 2. Identify the smallest missing or inconsistent template capability.

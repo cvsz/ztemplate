@@ -1,6 +1,21 @@
 # zTemplate
 
-A production-ready, reusable GitHub repository template for starting new projects with consistent engineering, security, documentation, automation, and release practices.
+A reusable, security-oriented GitHub project starting point with governance, engineering guidance, CI and a tested first-project bootstrap. This repository is **not** a deployable application or proof of production readiness.
+
+## Create a new project
+
+1. Click **Use this template** on GitHub and clone the generated repository.
+2. Preview the project initialization:
+
+   ```bash
+   python3 scripts/bootstrap.py --name my-service --owner my-org --codeowner my-org/maintainers --description 'New service'
+   ```
+
+3. Run the same command with `--apply`, inspect `git diff`, and review `LICENSE`, `SECURITY.md`, `CODEOWNERS` and the [startup guide](docs/startup.md).
+4. Select an optional [project profile](docs/profiles.md), replace placeholder `Makefile` / `Dockerfile`, and complete [Implementation Checklist](IMPLEMENTATION-CHECKLIST.md).
+5. Run `make validate-template` to test the bootstrap. Application-specific Makefile commands deliberately fail until implemented.
+
+Project initialization edits only README.md, ABOUT.md, CODEOWNERS, and issue security routing; it does not create a production application or change infrastructure. Re-running with the same settings is idempotent.
 
 ## Included
 
@@ -11,7 +26,7 @@ A production-ready, reusable GitHub repository template for starting new project
 - CodeQL security scanning
 - Dependency Review for pull requests
 - Dependabot configuration
-- Release workflow and release notes configuration
+- Release guidance and release-note configuration; publishing workflows must be configured for each project
 - Conventional commit / PR guidance
 - EditorConfig, Git attributes, and Git ignore baseline
 - Community health files
@@ -37,6 +52,13 @@ organization uses for edge infrastructure. See
 [`docs/cloudflare-terraform.md`](docs/cloudflare-terraform.md) for how to
 request a hostname, why duplicates cause drift, and why the apply step must wait
 for the owning repository's pull request to merge.
+
+## Template limitations
+
+- CI checks the repository baseline and bootstrap tests. Add application lint/build/tests and supported CodeQL languages for the chosen stack.
+- This template's Dockerfile is illustrative and must not be shipped unchanged.
+- DNS, Cloudflare tunnel and other shared infrastructure remain owned by the designated infrastructure repository.
+- GitHub branch rulesets, repository settings, Dependabot alerts, secrets and production environments must be configured in each generated repository.
 
 ## Start from this template
 

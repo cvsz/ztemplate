@@ -39,6 +39,9 @@ jobs:
             test -f "$path" || { echo "Missing required file: $path"; exit 1; }
           done
 
+      - name: Exercise startup bootstrap tests
+        run: python3 -m unittest discover -s tests -v
+
       - name: Check for common secret file names
         shell: bash
         run: |
