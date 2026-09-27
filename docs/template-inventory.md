@@ -14,6 +14,10 @@ This repository provides a secure, reusable baseline for new GitHub projects.
 - issue forms and pull request template
 - CODEOWNERS
 
+## Agent review
+- AGENTS.md agent contract
+- .agents/skills/scrutinize/SKILL.md (intent-first, end-to-end evidence-based review)
+
 ## Automation and security
 - baseline CI
 - CodeQL and CodeQL configuration
