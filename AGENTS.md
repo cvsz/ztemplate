@@ -26,7 +26,7 @@ Use obvious placeholders such as `PROJECT_NAME`, `OWNER`, `example.com`, and `RE
 
 ## Project initialization
 
-- For a repository created with **Use this template**, follow [docs/startup.md](docs/startup.md) and preview `scripts/bootstrap.py` before `--apply`.
+- For a repository created with **Use this template**, follow [docs/startup.md](docs/startup.md) and preview `scripts/bootstrap.py` before `--apply`; pass an actual GitHub user or org/team via `--codeowner` and verify write access.
 - Do not present an initialized scaffold as a running or production-ready system; bootstrap changes project identity and ownership routing only.
 - Replace Makefile and Dockerfile placeholders with actual project-specific commands and images before enabling an application delivery pipeline.
 - Never overwrite existing application code, production secrets, DNS ownership or original license attribution during initialization.
