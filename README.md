@@ -24,6 +24,10 @@ A production-ready, reusable GitHub repository template for starting new project
 - Makefile task entrypoints
 - Cloudflare and Terraform ownership contract
 
+## Agent review skill
+
+The reusable [Scrutinize skill](.agents/skills/scrutinize/SKILL.md) provides outsider-perspective reviews of plans, pull requests, diffs, and proposed code changes. It questions the need for the change, traces the actual end-to-end path, checks claimed behavior against evidence, and reports minimal actionable fixes. The repository's [agent contract](AGENTS.md) directs compatible agents to apply this approach on `/scrutinize` and review/audit requests; slash-command availability depends on the agent host.
+
 ## DNS and public hostnames
 
 Do not add Cloudflare Terraform to a project created from this template. Public
