@@ -2,11 +2,19 @@
 
 Use this checklist after creating a repository from `ztemplate`.
 
+## Bootstrap
+
+- [ ] Generate a new repository using **Use this template**, not a fork when independent history is desired.
+- [ ] Preview and apply `scripts/bootstrap.py` with the actual name, owner and description.
+- [ ] Review the four changed identity files and commit `.ztemplate-initialized.json` as nonsecret setup evidence.
+- [ ] Choose a project profile in `docs/profiles.md` and record non-goals.
+- [ ] Confirm README and ABOUT describe the real project rather than the original author.
+
 ## Repository identity
 
 - [ ] Replace `ztemplate` references with the real project name.
 - [ ] Replace template descriptions and badges.
-- [ ] Confirm license ownership and year.
+- [ ] Confirm license choice, retain valid original attribution and add the project's actual copyright holder/year as appropriate.
 - [ ] Configure repository topics, description, homepage, and template status.
 
 ## Ownership and governance
