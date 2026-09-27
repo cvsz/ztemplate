@@ -41,8 +41,8 @@ def build_changes(root: Path, name: str, owner: str, description: str) -> dict:
     if not description.strip() or len(description) > 500 or "\n" in description or "\r" in description:
         raise ValueError("Description must be one nonempty line (max 500 characters)")
     # Escape generated Markdown and YAML contexts independently.
-    markdown_description = description.replace("\\", "\\\\").replace("<", "&lt;").replace("&", "&amp;")
-    markdown_description = markdown_description.replace(">", "&gt;").replace("\n", " ")
+    markdown_description = description.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+    markdown_description = markdown_description.replace("\\", "\\\\")
     values = {
         "{{PROJECT_NAME}}": name,
         "{{OWNER}}": owner,
