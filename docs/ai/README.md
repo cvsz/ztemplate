@@ -8,6 +8,7 @@
 
 ## Guides
 - [ECC integration](guides/ecc-integration.md)
+- [GitHub repository administration gate](guides/github-repository-admin.md)
 - [Skill catalog architecture](guides/skill-catalog-architecture.md)
 - [Cross-harness compatibility](guides/harness-compatibility.md)
 - [Cost and token budget](guides/cost-token-budget.md)
