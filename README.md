@@ -1,47 +1,95 @@
 # zTemplate
 
-A reusable, security-oriented GitHub project starting point with governance, engineering guidance, CI and a tested first-project bootstrap. This repository is **not** a deployable application or proof of production readiness.
+A reusable, security-oriented GitHub project starting point with governance, engineering guidance, CI, AI-agent operating rules, repository validation, and an automated GitHub administration gate.
+
+This repository is a **template foundation**, not a deployable application. A repository generated from it still requires stack-specific implementation, deployment, recovery, observability, and security evidence before that application can be called production ready.
 
 ## Create a new project
 
 1. Click **Use this template** on GitHub and clone the generated repository.
-2. Preview the project initialization:
+2. Preview project initialization:
 
    ```bash
    python3 scripts/bootstrap.py --name my-service --owner my-org --codeowner my-org/maintainers --description 'New service'
    ```
 
-3. Run the same command with `--apply`, inspect `git diff`, and review `LICENSE`, `SECURITY.md`, `CODEOWNERS` and the [startup guide](docs/startup.md).
-4. Select an optional [project profile](docs/profiles.md), replace placeholder `Makefile` / `Dockerfile`, and complete [Implementation Checklist](IMPLEMENTATION-CHECKLIST.md).
-5. Run `make validate-template` to test the bootstrap. Application-specific Makefile commands deliberately fail until implemented.
+3. Apply explicitly, inspect the diff, and review ownership/security files:
 
-Project initialization edits only README.md, ABOUT.md, CODEOWNERS, and issue security routing; it does not create a production application or change infrastructure. Re-running with the same settings is idempotent.
+   ```bash
+   python3 scripts/bootstrap.py --name my-service --owner my-org --codeowner my-org/maintainers --description 'New service' --apply
+   make validate-template
+   ```
+
+4. Select an optional [project profile](docs/profiles.md), replace placeholder `Makefile` / `Dockerfile`, and complete the [Implementation Checklist](IMPLEMENTATION-CHECKLIST.md).
+5. Configure and verify repository administration controls from an authenticated GitHub admin identity:
+
+   ```bash
+   python3 scripts/github_admin.py --repo my-org/my-service --apply
+   ```
+
+6. Add stack-specific CI, security, release, deployment, backup/restore, rollback, monitoring, and operational evidence.
+
+See the complete [startup guide](docs/startup.md).
 
 ## Included
 
 - Issue and pull request templates
-- CODEOWNERS and repository contribution guidance
-- Security policy and support policy
-- CI workflow baseline
+- CODEOWNERS and governance guidance
+- Security and support policies
+- CI repository-baseline validation
 - CodeQL security scanning
-- Dependency Review for pull requests
+- Dependency Review
 - Dependabot configuration
-- Release guidance and release-note configuration; publishing workflows must be configured for each project
+- Immutable SHA pinning for baseline GitHub Actions
+- Release guidance and release-note configuration
+- Repository structure and local Markdown-link validation
+- GitHub administration automation with read-back verification
 - Conventional commit / PR guidance
-- EditorConfig, Git attributes, and Git ignore baseline
-- Community health files
-- Documentation structure
-- Changelog and roadmap templates
-- Implementation checklist
-- Architecture Decision Record (ADR) template
+- Documentation, ADR, changelog, and roadmap structure
 - Environment example
-- Docker baseline
-- Makefile task entrypoints
-- Cloudflare and Terraform ownership contract
+- Docker and Makefile placeholders
+- Cloudflare/Terraform ownership contract
+- Cross-agent ZEAZ engineering execution layer
+- Reusable skill/catalog structure
+
+## Repository administration gate
+
+`scripts/github_admin.py` is dry-run by default.
+
+Apply and verify:
+
+```bash
+python3 scripts/github_admin.py --repo OWNER/REPO --apply
+```
+
+Verify without mutation:
+
+```bash
+python3 scripts/github_admin.py --repo OWNER/REPO --verify
+```
+
+The helper is designed to enforce or verify:
+
+- pull-request review before merge
+- CODEOWNERS review
+- stale-review dismissal
+- approval after the latest push
+- conversation resolution
+- strict required status checks
+- administrator enforcement
+- no force pushes
+- no protected-branch deletion
+- Dependabot vulnerability alerts/security fixes
+- private vulnerability reporting
+- secret scanning/push protection when available
+- read-only default Actions token permissions
+- Actions cannot approve pull requests
+
+Presence of this script is not evidence that a generated repository is configured. The effective settings must be read back successfully.
+
+See [GitHub repository administration gate](docs/ai/guides/github-repository-admin.md).
 
 ## AI engineering execution layer
-
-This template includes a reusable cross-agent operating framework:
 
 - [ZEAZ engineering execution framework](ZEAZ-INTRODUCTION.md)
 - [Repository agent contract](AGENTS.md)
@@ -51,38 +99,22 @@ This template includes a reusable cross-agent operating framework:
 - [ECC integration](docs/ai/guides/ecc-integration.md)
 - [ZEAZ skills catalog](skills/README.md)
 
-These files provide operating guidance; they are not evidence that a generated application is production ready.
-
-## Agent review skill
-
-The reusable [Scrutinize skill](.agents/skills/scrutinize/SKILL.md) provides outsider-perspective reviews of plans, pull requests, diffs, and proposed code changes. It questions the need for the change, traces the actual end-to-end path, checks claimed behavior against evidence, and reports minimal actionable fixes. The repository's [agent contract](AGENTS.md) directs compatible agents to apply this approach on `/scrutinize` and review/audit requests; slash-command availability depends on the agent host.
+These files guide execution and evidence handling. They are not production-readiness evidence by themselves.
 
 ## DNS and public hostnames
 
-Do not add Cloudflare Terraform to a project created from this template. Public
-DNS records and tunnel ingress must have exactly one owning repository, which is
-the only place they may be declared. Point this at whichever repository your
-organization uses for edge infrastructure. See
-[`docs/cloudflare-terraform.md`](docs/cloudflare-terraform.md) for how to
-request a hostname, why duplicates cause drift, and why the apply step must wait
-for the owning repository's pull request to merge.
+Do not add duplicate Cloudflare/DNS ownership to a generated project. Public DNS and shared tunnel ingress must have one designated owning repository.
+
+See [Cloudflare and Terraform ownership](docs/cloudflare-terraform.md).
 
 ## Template limitations
 
-- CI checks the repository baseline and bootstrap tests. Add application lint/build/tests and supported CodeQL languages for the chosen stack.
-- This template's Dockerfile is illustrative and must not be shipped unchanged.
-- DNS, Cloudflare tunnel and other shared infrastructure remain owned by the designated infrastructure repository.
-- GitHub branch rulesets, repository settings, Dependabot alerts, secrets and production environments must be configured in each generated repository.
-
-## Start from this template
-
-1. Use this repository as a GitHub template repository.
-2. Create a new repository from the template.
-3. Replace placeholder project metadata.
-4. Review and customize `.github/CODEOWNERS`, `SECURITY.md`, CI matrices, and release settings.
-5. Add language/framework-specific workflows only when the project needs them.
-6. If the project needs a public hostname, request it from the repository that
-   owns your edge infrastructure rather than adding Terraform here.
+- Baseline CI validates template structure and bootstrap behavior; generated projects must add real application lint/build/test/security checks.
+- The included Dockerfile and application Makefile targets are placeholders and must not ship unchanged.
+- Shared infrastructure remains owned by the designated infrastructure repository.
+- `scripts/github_admin.py` requires an authenticated GitHub identity with repository Administration permission.
+- A green CI run proves only the checks that actually ran; it does not prove application production readiness.
+- Generated repositories must independently verify deployment, rollback, backup/restore, observability, security, capacity, and incident-response gates that apply to the real system.
 
 ## Repository structure
 
@@ -91,11 +123,9 @@ for the owning repository's pull request to merge.
   ISSUE_TEMPLATE/
   workflows/
   CODEOWNERS
-  CONTRIBUTING.md
   PULL_REQUEST_TEMPLATE.md
   dependabot.yml
   release.yml
-  SUPPORT.md
 docs/
   adr/
   ai/
@@ -105,10 +135,15 @@ docs/
   architecture.md
   development.md
   release.md
-.env.example
-.editorconfig
-.gitattributes
-.gitignore
+  repository-rollout.md
+  startup.md
+scripts/
+  bootstrap.py
+  github_admin.py
+  validate_repo.py
+skills/
+components.d/
+plugins.d/
 AGENTS.md
 CLAUDE.md
 OPENCODE.md
@@ -116,7 +151,8 @@ ZEAZ-INTRODUCTION.md
 ecc-install.json
 CHANGELOG.md
 CODE_OF_CONDUCT.md
-Dockerfile
+CONTRIBUTING.md
+GOVERNANCE.md
 IMPLEMENTATION-CHECKLIST.md
 LICENSE
 Makefile
@@ -128,12 +164,20 @@ SECURITY.md
 ## Principles
 
 - Secure by default
-- Least privilege for GitHub Actions
-- Reproducible automation
+- Least privilege
+- Immutable/reproducible automation where practical
 - Small, reviewable pull requests
 - Documentation as part of delivery
-- No weakening of security gates to make CI green
-- Explicit release and rollback practices
+- Evidence-backed readiness claims
+- No weakening of security gates merely to make CI green
+- Explicit rollback/recovery practices
+- Repository-specific policy is preserved when rolling the baseline into existing projects
+
+## Rollout to existing repositories
+
+Do not bulk-copy this template over an established repository.
+
+Use the [repository rollout guide](docs/repository-rollout.md) to audit the target first and port only missing compatible controls.
 
 ## License
 

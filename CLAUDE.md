@@ -13,3 +13,6 @@ Do not equate green CI with production readiness. Evaluate applicable security, 
 Avoid unbounded retries or repeated unchanged scans. Prefer targeted validation first, reuse fresh evidence, and stop when acceptance criteria are satisfied.
 
 Use: `VERIFIED`, `PARTIALLY VERIFIED`, `UNVERIFIED`, `BLOCKED`, `NOT APPLICABLE`.
+
+
+For GitHub repository-administration work, treat `scripts/github_admin.py` as an operator helper rather than implicit authorization. Do not run `--apply` without explicit authority for the target repository. A successful `--verify` read-back may support the exact repository-control claims it checks, but it does not establish application production readiness.

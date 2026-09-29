@@ -31,3 +31,16 @@ Pull requests should explain the problem, implementation, testing, security impa
 ## Security
 
 Do not report exploitable vulnerabilities in public issues. Follow `SECURITY.md`.
+
+
+## Repository validation
+
+Before opening or updating a pull request, run the repository validator when your change affects template structure or documentation:
+
+```bash
+make validate-template
+```
+
+Do not merge from an older green commit after the PR head changes. Required checks must pass for the current exact head.
+
+Repository-administration changes require an authenticated admin identity and read-back verification with `scripts/github_admin.py --verify`; configuration intent alone is not evidence.

@@ -51,7 +51,7 @@ Report vulnerabilities through SECURITY.md, not public issues. Security-related 
 
 ## Documentation ownership
 - `.github/`: GitHub automation, community health, ownership, issue/PR templates.
-- `docs/`: versioned engineering, operations, and release guidance.
+- `docs/`: versioned engineering, operations, release, repository-administration, and rollout guidance.
 - `docs/adr/`: architecture decision records.
 - Root Markdown files: repository-wide policy and project lifecycle guidance.
 
@@ -66,3 +66,10 @@ Add a child AGENTS.md only when a subtree has durable rules that differ from thi
 - Task playbooks are additive and never weaken this repository contract or narrower subtree rules.
 - Use the canonical evidence-state definitions and decision rule in [ZEAZ-INTRODUCTION.md](ZEAZ-INTRODUCTION.md); do not redefine them per harness or playbook.
 - Keep implementation, verification, deployment, and production readiness as distinct states.
+
+
+## Existing-repository rollout
+
+When applying this template to an established repository, follow [docs/repository-rollout.md](docs/repository-rollout.md). Audit the target first and port only missing compatible controls. Do not overwrite repository-specific AGENTS rules, CI matrices, release workflows, infrastructure ownership, or operational evidence merely to match this template.
+
+For repository administration, `scripts/github_admin.py` requires an authenticated GitHub identity with Administration permission. Treat successful read-back verification—not script presence—as evidence that the controls are effective.

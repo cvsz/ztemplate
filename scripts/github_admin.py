@@ -174,7 +174,9 @@ def verify(repo: str, branch: str) -> list[str]:
         errors.append("secret scanning push protection is not enabled")
 
     try:
-        gh_api("GET", f"repos/{repo}/private-vulnerability-reporting")
+        private_reporting = gh_api("GET", f"repos/{repo}/private-vulnerability-reporting")
+        if private_reporting.get("enabled") is not True:
+            errors.append("private vulnerability reporting is not enabled")
     except RuntimeError as exc:
         errors.append(f"private vulnerability reporting not verified: {exc}")
 
@@ -182,6 +184,11 @@ def verify(repo: str, branch: str) -> list[str]:
         gh_api("GET", f"repos/{repo}/vulnerability-alerts")
     except RuntimeError as exc:
         errors.append(f"Dependabot vulnerability alerts not verified: {exc}")
+
+    try:
+        gh_api("GET", f"repos/{repo}/automated-security-fixes")
+    except RuntimeError as exc:
+        errors.append(f"Dependabot automated security fixes not verified: {exc}")
 
     return errors
 

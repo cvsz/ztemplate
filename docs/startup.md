@@ -1,38 +1,108 @@
 # Start a project from ztemplate
 
-This repository is a language-agnostic governance and tooling baseline, not a deployable product. Use GitHub **Use this template** (not a fork), clone the generated repository and start on a feature branch.
+This repository is a language-agnostic governance/tooling baseline, not a deployable product.
+
+Use GitHub **Use this template** when independent history is desired, clone the generated repository, and work through a feature branch.
 
 ## 1. Initialize project identity
 
-Requires Python 3.10+ and Git. Run first without --apply to preview exactly which four files will be updated:
+Requires Python 3.10+ and Git.
 
-    python3 scripts/bootstrap.py --name my-service --owner my-org --codeowner my-org/maintainers --description 'Describe the product'
+Preview:
 
-Apply explicitly:
+```bash
+python3 scripts/bootstrap.py --name my-service --owner my-org --codeowner my-org/maintainers --description 'Describe the product'
+```
 
-    python3 scripts/bootstrap.py --name my-service --owner my-org --codeowner my-org/maintainers --description 'Describe the product' --apply
+Apply:
 
-The command creates .ztemplate-initialized.json and edits only README.md, ABOUT.md, .github/CODEOWNERS, and .github/ISSUE_TEMPLATE/config.yml. CODEOWNERS must be an actual GitHub user or org/team with write access; repository owner alone is not sufficient for an organization. Running again with identical arguments is a no-op; using different settings requires manual review. Run in a clean, new repository and review git diff before committing. If interrupted, inspect git diff and reset or repair manually before rerunning; changes are atomic per file but not a multi-file transaction.
+```bash
+python3 scripts/bootstrap.py --name my-service --owner my-org --codeowner my-org/maintainers --description 'Describe the product' --apply
+```
 
-## 2. Required manual decisions
+Review `git diff` and commit the generated identity marker only after confirming the resulting project metadata and ownership.
 
-- Choose language, runtime, framework, package manager, supported versions, repository visibility and release policy. See [profiles](profiles.md).
-- Review LICENSE; the template's existing attribution remains intact. Select a project license and confirm copyright ownership with the legal owner.
-- Replace or remove the placeholder Dockerfile and Makefile stack-specific commands. Do not ship a placeholder container.
-- Set actual maintainers and protected ownership paths in CODEOWNERS. Confirm referenced users or teams have write access.
-- Configure SECURITY.md's private reporting channel and verify the issue-form link after repository rename or transfer.
-- Decide authentication, authorization, data retention, backups, error budgets, budget and operational responsibilities where applicable.
-- Configure branch rulesets, required checks, signed commits if appropriate, protected deployment environments and least-privilege secrets.
-- Ensure the template's GitHub Actions versions and feature availability are supported in the generated repository; add stack-specific checks without dropping baseline security checks.
+## 2. Validate the inherited baseline
 
-## 3. Development baseline
+```bash
+make validate-template
+```
 
-Copy .env.example to a local .env; it must stay untracked. Add real code, automated tests, development commands and an integration test for your chosen runtime. The provided Makefile's app-specific targets fail until implemented to prevent false success. Run python3 -m unittest discover -s tests -v to validate the template bootstrap itself.
+This validates repository structure, local Markdown links, and bootstrap behavior. Application-specific Makefile targets intentionally fail until replaced.
 
-## 4. Operations and release evidence
+## 3. Configure repository administration
 
-Complete [architecture](architecture.md), [development](development.md), [release](release.md), and [implementation checklist](../IMPLEMENTATION-CHECKLIST.md). Establish staging deployment, synthetic health checks, structured logs, metrics, backups and isolated restore drills, rollback to a known-good build, alert routing, security response contacts, and release approval appropriate to the product's risk. Validate from a fresh clone and keep timestamped evidence. A green template CI is not proof of application production readiness.
+The inherited script is dry-run by default:
 
-## 5. Public hostnames
+```bash
+python3 scripts/github_admin.py --repo my-org/my-service
+```
 
-Follow [central Cloudflare/DNS ownership contract](cloudflare-terraform.md). Never introduce public DNS or shared tunnel changes from a generated application repository if a designated infrastructure repository owns them.
+Apply and read back effective settings:
+
+```bash
+python3 scripts/github_admin.py --repo my-org/my-service --apply
+```
+
+Later verification:
+
+```bash
+python3 scripts/github_admin.py --repo my-org/my-service --verify
+```
+
+This step requires an authenticated `gh` identity with repository Administration permission.
+
+Do not treat the presence of the script as proof that branch/security settings are enabled.
+
+## 4. Make project-specific decisions
+
+- choose language/runtime/framework/package manager and supported versions
+- review licensing and attribution
+- replace the placeholder Dockerfile and Makefile application commands
+- set real maintainers/CODEOWNERS
+- replace the generic security support policy
+- define authentication/authorization and data-retention requirements
+- define secrets, environments, release policy, and deployment protections
+- add stack-specific CI/security checks
+- choose backup/recovery/rollback requirements
+- define observability and incident ownership
+
+See [profiles](profiles.md) and the [implementation checklist](../IMPLEMENTATION-CHECKLIST.md).
+
+## 5. Development baseline
+
+Copy `.env.example` to a local ignored `.env`. Add real code, tests, build tooling, security checks, and deterministic dependency installation.
+
+Do not remove inherited security checks merely to simplify CI.
+
+## 6. Operations and release evidence
+
+Complete:
+
+- [architecture](architecture.md)
+- [development](development.md)
+- [release](release.md)
+- [implementation checklist](../IMPLEMENTATION-CHECKLIST.md)
+
+For an application intended for production, establish environment-appropriate evidence for applicable gates such as:
+
+- deployment verification
+- authenticated health/readiness checks
+- structured logs/metrics/traces
+- alert routing
+- backup and isolated restore
+- rollback to a known-good build
+- RPO/RTO
+- load/capacity validation
+- security response contacts
+- incident/runbook procedures
+
+Green repository CI is not proof of application production readiness.
+
+## 7. Public hostnames
+
+Follow the [central Cloudflare/DNS ownership contract](cloudflare-terraform.md). Never introduce duplicate ownership of public DNS or a shared tunnel from an application repository when a designated infrastructure repository already owns it.
+
+## 8. Existing repositories
+
+When adopting this baseline into an established project, do not copy the template wholesale. Follow the [repository rollout guide](repository-rollout.md) and preserve repository-specific architecture, policy, tests, and operational contracts.
