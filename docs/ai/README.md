@@ -7,6 +7,7 @@
 - [OPENCODE.md](../../OPENCODE.md)
 
 ## Compatibility and operating controls
+- [ECC integration](ecc-integration.md)
 - [Cross-harness compatibility](harness-compatibility.md)
 - [Cost and token budget](cost-token-budget.md)
 

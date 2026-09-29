@@ -48,6 +48,7 @@ This template includes a reusable cross-agent operating framework:
 - [Claude Code instructions](CLAUDE.md)
 - [OpenCode instructions](OPENCODE.md)
 - [Reusable AI playbooks and prompts](docs/ai/README.md)
+- [ECC integration](docs/ai/ecc-integration.md)
 
 These files provide operating guidance; they are not evidence that a generated application is production ready.
 
@@ -108,6 +109,7 @@ AGENTS.md
 CLAUDE.md
 OPENCODE.md
 ZEAZ-INTRODUCTION.md
+ecc-install.json
 CHANGELOG.md
 CODE_OF_CONDUCT.md
 Dockerfile
