@@ -9,7 +9,7 @@ This template is intended to stay generic while providing production-grade repos
 - [x] Issue and pull request templates
 - [x] CI and security workflow baseline
 - [x] Dependabot configuration
-- [x] Release workflow
+- [x] Release guidance and release-note configuration
 - [x] Docker and task-runner placeholders
 - [x] Architecture and development documentation structure
 
