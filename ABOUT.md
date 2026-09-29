@@ -1,72 +1,21 @@
 # About cvsz
 
-`cvsz` is a builder focused on AI-first software, developer platforms, automation, infrastructure, and production-grade systems.
+`cvsz` is a builder focused on AI-first software, developer platforms, automation, infrastructure, and production-oriented systems.
 
 ## Focus areas
 
 - AI coding tools and autonomous/agentic systems
-- AI application platforms and OpenAI-compatible integrations
-- Developer platforms, APIs, SDKs, and internal tooling
-- Platform engineering, infrastructure automation, CI/CD, and DevOps
-- Security-aware architecture, repository hardening, and engineering quality gates
-- Workflow automation, bots, social automation, and commerce integrations
-- Payment, wallet, ledger, and financial-system architecture
-- Media, streaming, multimodal, speech, image, OCR, and search systems
-- Gaming and interactive application infrastructure
+- AI application platforms and model/API integrations
+- developer platforms, APIs, SDKs, and internal tooling
+- platform engineering, infrastructure automation, CI/CD, and DevOps
+- security-aware architecture and repository hardening
+- workflow automation, bots, social, and commerce integrations
+- payment, wallet, ledger, and financial-system architecture
+- media, streaming, multimodal, speech, image, OCR, and search systems
+- gaming and interactive application infrastructure
 - OpenAPI tooling and service integration
 
-## Current engineering interests
-
-### AI and agents
-
-Building practical AI systems that combine coding agents, tool use, model routing, multimodal capabilities, automation, and production infrastructure.
-
-Areas of interest include:
-
-- coding assistants and autonomous coding workflows
-- multi-agent orchestration
-- tool and API integrations
-- OpenAI-compatible model providers
-- model fallback and routing strategies
-- text, image, speech, embeddings, OCR, search, and video capabilities
-- reusable agent and project generators
-
-### Platform engineering
-
-Designing reusable foundations for products and services with an emphasis on:
-
-- modular service architecture
-- APIs and SDKs
-- containerized development and deployment
-- CI/CD automation
-- observability
-- security scanning
-- dependency automation
-- reproducible environments
-- scalable infrastructure
-
-### Automation and integrations
-
-Projects and experiments include automation around platforms and services such as:
-
-- LINE
-- TikTok Shop
-- social and commerce workflows
-- OpenAPI-based services
-- bots and event-driven automation
-
-### Payments and financial systems
-
-Interest in robust financial architecture including:
-
-- wallets
-- ledgers
-- accounting-style transaction models
-- payment services
-- auditability
-- safe transaction processing
-
-### Engineering philosophy
+## Engineering philosophy
 
 Projects should aim to be:
 
@@ -77,29 +26,28 @@ Projects should aim to be:
 - observable
 - testable
 - documented
-- production-oriented
+- evidence-driven
 - friendly to incremental improvement
 
-Security and quality checks should be fixed rather than bypassed. Infrastructure, CI, documentation, and operational readiness are treated as part of the product rather than afterthoughts.
+Security/quality failures should be fixed rather than bypassed. CI, infrastructure, documentation, recovery, repository controls, and operational readiness are treated as part of product engineering.
 
-## Public project themes
+## ztemplate direction
 
-The `cvsz` GitHub portfolio spans a broad collection of repositories covering areas such as:
+The template is intended to give new repositories disciplined foundations from the first commit:
 
-- AI tools and AI coding systems
-- agent generators and agent platforms
-- platform and infrastructure projects
-- automation and bot systems
-- payment and wallet systems
-- OpenAPI tooling
-- media and streaming projects
-- gaming projects
-- security, tracking, and operational tooling
-- general developer utilities
+- governance and ownership
+- security policy
+- protected change flow
+- CI/security automation
+- dependency maintenance
+- release/recovery guidance
+- architecture documentation
+- AI-agent operating contracts
+- evidence-state semantics
+- repository administration verification
+- safe rollout guidance for existing projects
 
-## Preferred project direction
-
-The goal of this repository template is to provide a strong starting point for future projects so that new repositories begin with engineering discipline already in place: documentation, security policy, CI, dependency maintenance, release structure, issue/PR workflows, architecture guidance, and a clear implementation checklist.
+The template itself does not claim that generated applications are production ready. Application readiness remains evidence-based and stack/environment specific.
 
 ## GitHub
 
@@ -108,4 +56,4 @@ The goal of this repository template is to provide a strong starting point for f
 
 ---
 
-This profile intentionally contains only public-safe technical and project information. Personal, private, credential, account, and sensitive identity information should not be added to a public repository template.
+This profile intentionally contains public-safe technical/project information only. Credentials, private account data, personal secrets, and sensitive identity information must not be added to a public repository template.
