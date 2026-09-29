@@ -79,10 +79,15 @@ Distinguish local, test, CI, integration, staging, production-equivalent and pro
 
 ## Production readiness
 
-Production readiness is an evidence-backed assessment across applicable security, reliability, data integrity, CI/CD, reproducibility, observability, backup/restore, DR, rollback, performance, capacity, documentation, incident response, ownership and compliance dimensions. Readiness gates are independent of P0/P1/P2/P3 work-priority labels: every applicable readiness gate must be `VERIFIED`, while `NOT APPLICABLE` requires explicit justification. Green CI alone is insufficient.
+Production readiness is an evidence-backed assessment across applicable repository governance, security, reliability, data integrity, CI/CD, reproducibility, deployment, observability, backup/restore, DR, rollback, performance, capacity, documentation, incident response, ownership and compliance dimensions. Readiness gates are independent of P0/P1/P2/P3 work-priority labels: every applicable readiness gate must be `VERIFIED`, while `NOT APPLICABLE` requires explicit justification. Green CI alone is insufficient.
 
 Risk acceptance and release authorization are separate from readiness evidence. An authorized owner may choose to release with known risk, but accepted risk must not upgrade a `PARTIALLY VERIFIED`, `UNVERIFIED`, or `BLOCKED` gate or be used to claim production readiness without direct evidence.
 
 ## Final rule
 
 Inspect first. Reason from evidence. Change the smallest necessary surface. Protect data and credentials. Verify what changed. Record what remains unknown. Do not confuse implementation, verification, deployment and production readiness.
+
+
+## Repository administration evidence
+
+Repository-level controls such as protected branches, required reviews/checks, secret scanning, Dependabot/security settings, and Actions permissions are effective-state claims. Configuration files or helper scripts alone do not verify them. Prefer authenticated provider read-back of the effective settings, and classify missing provider permission as `BLOCKED` rather than assuming success.
