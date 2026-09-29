@@ -1,6 +1,6 @@
 # Repository Baseline Rollout
 
-Use this process to adopt the current `ztemplate` production-readiness baseline in an existing repository.
+Use this process to adopt the current `ztemplate` repository-foundation baseline in an existing repository.
 
 ## Rule
 

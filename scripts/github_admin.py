@@ -183,6 +183,11 @@ def verify(repo: str, branch: str) -> list[str]:
     except RuntimeError as exc:
         errors.append(f"Dependabot vulnerability alerts not verified: {exc}")
 
+    try:
+        gh_api("GET", f"repos/{repo}/automated-security-fixes")
+    except RuntimeError as exc:
+        errors.append(f"Dependabot automated security fixes not verified: {exc}")
+
     return errors
 
 
