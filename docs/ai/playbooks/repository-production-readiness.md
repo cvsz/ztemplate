@@ -9,7 +9,7 @@ Review build/reproducibility, testing, security, data/migrations, backup/restore
 Readiness state and release authorization are separate decisions.
 
 - A gate is `VERIFIED` only when direct evidence supports that exact claim.
-- Apply the central evidence-state definitions in `../../ZEAZ-INTRODUCTION.md`. Missing evidence without a preventing blocker is `UNVERIFIED`; a concrete preventing prerequisite is `BLOCKED`; evidence covering only part of the gate is `PARTIALLY VERIFIED`.
+- Apply the central evidence-state definitions in `../../../ZEAZ-INTRODUCTION.md`. Missing evidence without a preventing blocker is `UNVERIFIED`; a concrete preventing prerequisite is `BLOCKED`; evidence covering only part of the gate is `PARTIALLY VERIFIED`.
 - An authorized owner may explicitly accept a known risk and still decide to release, but that acceptance does **not** change the readiness evidence state.
 - Record accepted risk separately with owner, scope, rationale, expiry/review date, mitigation, and rollback/containment plan.
 - Never convert an accepted risk into `VERIFIED`, `PARTIALLY VERIFIED`, or a production-ready claim without new evidence.

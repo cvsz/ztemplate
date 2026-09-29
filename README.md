@@ -48,7 +48,7 @@ This template includes a reusable cross-agent operating framework:
 - [Claude Code instructions](CLAUDE.md)
 - [OpenCode instructions](OPENCODE.md)
 - [Reusable AI playbooks and prompts](docs/ai/README.md)
-- [ECC integration](docs/ai/ecc-integration.md)
+- [ECC integration](docs/ai/guides/ecc-integration.md)
 - [ZEAZ skills catalog](skills/README.md)
 
 These files provide operating guidance; they are not evidence that a generated application is production ready.
@@ -99,6 +99,9 @@ for the owning repository's pull request to merge.
 docs/
   adr/
   ai/
+    guides/
+    playbooks/
+    prompts/
   architecture.md
   development.md
   release.md

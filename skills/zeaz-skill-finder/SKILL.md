@@ -36,10 +36,10 @@ Route a task to the smallest relevant reusable ZEAZ skill without preloading the
 ## Routing examples
 
 - repository review/audit -> repository-mandated Scrutinize skill under `.agents/skills/` when present
-- production/readiness assessment -> `docs/ai/repository-production-readiness.md`
-- security review -> `docs/ai/security-audit.md`
-- CI failure -> `docs/ai/ci-failure-modes.md`
-- release decision -> `docs/ai/saas-release.md` plus readiness playbook
+- production/readiness assessment -> `docs/ai/playbooks/repository-production-readiness.md`
+- security review -> `docs/ai/playbooks/security-audit.md`
+- CI failure -> `docs/ai/playbooks/ci-failure-modes.md`
+- release decision -> `docs/ai/playbooks/saas-release.md` plus readiness playbook
 
 ## Output
 
