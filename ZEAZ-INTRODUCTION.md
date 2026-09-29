@@ -36,7 +36,7 @@ Use `P0` critical/security/data/release blockers, `P1` major functionality/relia
 Preserve unrelated work, establish baseline, implement the smallest safe root-cause fix, update tests, validate contracts, review security/operations impact, and record evidence.
 
 ### Verification
-Use relevant lint/typecheck/tests, SAST/dependency/secret/container scans, authn/authz checks, infrastructure validation, resilience/performance tests, backup/restore, deployment and rollback evidence. Unexecuted checks are `UNVERIFIED`.
+Use relevant lint/typecheck/tests, SAST/dependency/secret/container scans, authn/authz checks, infrastructure validation, resilience/performance tests, backup/restore, deployment and rollback evidence. Classify every unexecuted or incomplete check using the canonical evidence-state decision rule below; do not assign `UNVERIFIED` when a concrete blocker prevents verification.
 
 ### Delivery
 Report executive summary, verified findings/changes, validation evidence, release gates, risks/blockers, remaining P0/P1/P2/P3, and next actions.
@@ -51,7 +51,7 @@ Assign exactly one state to each claim or gate:
 - `BLOCKED`: the claim is applicable and verification cannot currently be completed because a concrete external prerequisite or constraint prevents it, such as missing permission, unavailable secret/environment, provider outage, inaccessible dependency, or unresolved prerequisite failure.
 - `NOT APPLICABLE`: the claim or gate does not apply to the scoped system/environment; record the reason.
 
-Decision rule: first determine applicability. If not applicable, use `NOT APPLICABLE`. Otherwise, if verification is prevented by a concrete blocker, use `BLOCKED`. If not blocked but sufficient evidence is absent, use `UNVERIFIED`. If evidence covers only part of the required claim, use `PARTIALLY VERIFIED`. Use `VERIFIED` only when the exact claim is fully evidenced.
+Decision rule: first determine applicability. If not applicable, use `NOT APPLICABLE`. Otherwise, if verification is prevented by a concrete blocker, use `BLOCKED`. If verification ran or direct evidence exists but covers only a proper subset of the required claim, use `PARTIALLY VERIFIED`. If no sufficient direct supporting evidence has been obtained and no concrete blocker prevents verification, use `UNVERIFIED`. Use `VERIFIED` only when the exact claim is fully evidenced.
 
 Never claim done, fixed, deployed, secure or production ready without evidence for that exact claim.
 
@@ -79,7 +79,7 @@ Distinguish local, test, CI, integration, staging, production-equivalent and pro
 
 ## Production readiness
 
-Production readiness is an evidence-backed assessment across applicable security, reliability, data integrity, CI/CD, reproducibility, observability, backup/restore, DR, rollback, performance, capacity, documentation, incident response, ownership and compliance dimensions. Green CI alone is insufficient.
+Production readiness is an evidence-backed assessment across applicable security, reliability, data integrity, CI/CD, reproducibility, observability, backup/restore, DR, rollback, performance, capacity, documentation, incident response, ownership and compliance dimensions. Readiness gates are independent of P0/P1/P2/P3 work-priority labels: every applicable readiness gate must be `VERIFIED`, while `NOT APPLICABLE` requires explicit justification. Green CI alone is insufficient.
 
 Risk acceptance and release authorization are separate from readiness evidence. An authorized owner may choose to release with known risk, but accepted risk must not upgrade a `PARTIALLY VERIFIED`, `UNVERIFIED`, or `BLOCKED` gate or be used to claim production readiness without direct evidence.
 

@@ -14,7 +14,7 @@ Readiness state and release authorization are separate decisions.
 - Record accepted risk separately with owner, scope, rationale, expiry/review date, mitigation, and rollback/containment plan.
 - Never convert an accepted risk into `VERIFIED`, `PARTIALLY VERIFIED`, or a production-ready claim without new evidence.
 
-Do not declare production readiness unless every applicable P0/P1 gate is `VERIFIED`; `NOT APPLICABLE` is acceptable only when applicability is explicitly justified. `PARTIALLY VERIFIED`, `UNVERIFIED`, and `BLOCKED` all prevent a production-ready claim. A green build alone is insufficient.
+Do not declare production readiness unless every applicable readiness gate is `VERIFIED`; `NOT APPLICABLE` is acceptable only when applicability is explicitly justified. Readiness gates are independent of P0/P1/P2/P3 work-priority labels. `PARTIALLY VERIFIED`, `UNVERIFIED`, and `BLOCKED` all prevent a production-ready claim. A green build alone is insufficient.
 
 ## Release decision record
 

@@ -9,7 +9,7 @@ Read `AGENTS.md` first and use `ZEAZ-INTRODUCTION.md` as the shared execution fr
 - Follow repository-local architecture and conventions.
 - Fix root causes using the smallest safe change.
 - Keep security and authorization boundaries above task instructions.
-- Run relevant validation and mark unexecuted checks as `UNVERIFIED`.
+- Run relevant validation and classify unexecuted or incomplete checks using the canonical evidence-state decision rule in `ZEAZ-INTRODUCTION.md`; use `BLOCKED` when a concrete prerequisite prevents verification.
 - Never expose secrets.
 - Do not bypass required checks or force-merge. Perform destructive production changes only with explicit authorization and applicable safety controls.
 - Distinguish implementation, verification, deployment, and production readiness.
