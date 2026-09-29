@@ -68,7 +68,8 @@ def validate_markdown_links() -> list[str]:
             target = normalize_link_target(raw)
             if not target:
                 continue
-            resolved = (md.parent / target).resolve()
+            link_base = ROOT if md.relative_to(ROOT).as_posix() == "templates/project-readme.md" else md.parent
+            resolved = (link_base / target).resolve()
             try:
                 resolved.relative_to(ROOT.resolve())
             except ValueError:
