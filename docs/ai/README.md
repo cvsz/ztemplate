@@ -4,6 +4,11 @@
 - [ZEAZ-INTRODUCTION.md](../../ZEAZ-INTRODUCTION.md)
 - [AGENTS.md](../../AGENTS.md)
 - [CLAUDE.md](../../CLAUDE.md)
+- [OPENCODE.md](../../OPENCODE.md)
+
+## Compatibility and operating controls
+- [Cross-harness compatibility](harness-compatibility.md)
+- [Cost and token budget](cost-token-budget.md)
 
 ## Playbooks
 - [Repository Production Readiness](repository-production-readiness.md)
@@ -21,4 +26,4 @@
 - [Testing](prompt-testing.md)
 - [DevOps / SRE](prompt-devops.md)
 
-Use only the task layers that apply. Repository-local rules remain authoritative.
+Use only the task layers that apply. Repository-local rules remain authoritative, but no local or task instruction may weaken higher-priority safety and authorization boundaries.
