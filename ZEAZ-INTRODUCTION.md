@@ -75,7 +75,9 @@ Distinguish local, test, CI, integration, staging, production-equivalent and pro
 
 ## Production readiness
 
-Production readiness is an evidence-based release decision across applicable security, reliability, data integrity, CI/CD, reproducibility, observability, backup/restore, DR, rollback, performance, capacity, documentation, incident response, ownership and compliance dimensions. Green CI alone is insufficient.
+Production readiness is an evidence-backed assessment across applicable security, reliability, data integrity, CI/CD, reproducibility, observability, backup/restore, DR, rollback, performance, capacity, documentation, incident response, ownership and compliance dimensions. Green CI alone is insufficient.
+
+Risk acceptance and release authorization are separate from readiness evidence. An authorized owner may choose to release with known risk, but accepted risk must not upgrade an `UNVERIFIED` or `BLOCKED` gate or be used to claim production readiness without direct evidence.
 
 ## Final rule
 
