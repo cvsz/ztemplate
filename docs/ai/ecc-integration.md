@@ -1,14 +1,14 @@
 # ECC Integration
 
-This template includes a root `ecc-install.json` using ECC install-config schema version 1.
+This template includes a root `ecc-install.json` as an **OSS ECC CLI install configuration** using install-config schema version 1.
 
-## Why the manifest is minimal
+## Why the OSS CLI config is minimal
 
 The template intentionally does not select a `target`, `profile`, or module set. Those choices are project- and harness-specific and should be made after a repository is created from this template.
 
-The manifest therefore establishes a supported ECC configuration surface without forcing Claude, Codex, OpenCode, Cursor, hooks, language packs, or other runtime choices onto every generated repository.
+The config therefore establishes a supported ECC CLI configuration surface without forcing Claude, Codex, OpenCode, Cursor, hooks, language packs, or other runtime choices onto every generated repository.
 
-## Upstream contract
+## OSS CLI upstream contract
 
 Verified against the ECC upstream installer contract at commit:
 
@@ -20,7 +20,11 @@ Relevant upstream files:
 - `schemas/ecc-install-config.schema.json` — schema version 1; only `version` is required
 - `manifests/install-profiles.json` — profiles such as minimal, core, developer, security, research, and full
 
-The schema URL in `ecc-install.json` is commit-pinned for reproducibility.
+The schema URL in `ecc-install.json` is commit-pinned for reproducibility. This user-authored config does not contain, replace, authenticate, or prove any ECC GitHub App-generated identity, install-state, provenance, or analysis manifest.
+
+## ECC GitHub App separation
+
+ECC GitHub App analysis may generate repository-specific identity, harness, install-state, provenance, or analysis artifacts. Those hosted artifacts are separate evidence surfaces. Presence of `ecc-install.json` must never be treated as proof that an App analysis ran or that App-generated manifests are valid/current.
 
 ## Project setup
 
@@ -38,5 +42,5 @@ Review the planned destinations and mutations before applying them.
 
 - Do not silently change the pinned schema reference.
 - Re-verify upstream schema and installer behavior before updating the pin.
-- Keep ECC runtime installation separate from this repository's readiness claims.
+- Keep OSS ECC runtime configuration, ECC GitHub App-generated artifacts, and this repository's readiness claims as separate evidence surfaces.
 - Installing ECC components does not make a generated project production ready.
