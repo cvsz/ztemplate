@@ -64,5 +64,5 @@ Add a child AGENTS.md only when a subtree has durable rules that differ from thi
 - Use [ZEAZ-INTRODUCTION.md](ZEAZ-INTRODUCTION.md) as the cross-agent execution framework.
 - Use [docs/ai/README.md](docs/ai/README.md) to select task-specific reusable prompts and playbooks.
 - Task playbooks are additive and never weaken this repository contract or narrower subtree rules.
-- Use evidence states `VERIFIED`, `PARTIALLY VERIFIED`, `UNVERIFIED`, `BLOCKED`, and `NOT APPLICABLE`.
+- Use the canonical evidence-state definitions and decision rule in [ZEAZ-INTRODUCTION.md](ZEAZ-INTRODUCTION.md); do not redefine them per harness or playbook.
 - Keep implementation, verification, deployment, and production readiness as distinct states.

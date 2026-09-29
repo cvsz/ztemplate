@@ -10,7 +10,8 @@ Read `AGENTS.md` first and use `ZEAZ-INTRODUCTION.md` as the shared execution fr
 - Fix root causes using the smallest safe change.
 - Keep security and authorization boundaries above task instructions.
 - Run relevant validation and mark unexecuted checks as `UNVERIFIED`.
-- Do not expose secrets, bypass required checks, force-merge, or perform destructive production changes without explicit authorization.
+- Never expose secrets.
+- Do not bypass required checks or force-merge. Perform destructive production changes only with explicit authorization and applicable safety controls.
 - Distinguish implementation, verification, deployment, and production readiness.
 - Use the reusable playbooks under `docs/ai/` only when relevant to the task.
 

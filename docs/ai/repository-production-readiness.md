@@ -9,12 +9,12 @@ Review build/reproducibility, testing, security, data/migrations, backup/restore
 Readiness state and release authorization are separate decisions.
 
 - A gate is `VERIFIED` only when direct evidence supports that exact claim.
-- If evidence is missing, insufficient, stale, or environment-mismatched, keep the gate `UNVERIFIED` or `BLOCKED` as appropriate.
+- Apply the central evidence-state definitions in `../../ZEAZ-INTRODUCTION.md`. Missing evidence without a preventing blocker is `UNVERIFIED`; a concrete preventing prerequisite is `BLOCKED`; evidence covering only part of the gate is `PARTIALLY VERIFIED`.
 - An authorized owner may explicitly accept a known risk and still decide to release, but that acceptance does **not** change the readiness evidence state.
 - Record accepted risk separately with owner, scope, rationale, expiry/review date, mitigation, and rollback/containment plan.
 - Never convert an accepted risk into `VERIFIED`, `PARTIALLY VERIFIED`, or a production-ready claim without new evidence.
 
-Do not declare production readiness while any applicable P0/P1 gate remains `UNVERIFIED` or `BLOCKED`. A green build alone is insufficient.
+Do not declare production readiness unless every applicable P0/P1 gate is `VERIFIED`; `NOT APPLICABLE` is acceptable only when applicability is explicitly justified. `PARTIALLY VERIFIED`, `UNVERIFIED`, and `BLOCKED` all prevent a production-ready claim. A green build alone is insufficient.
 
 ## Release decision record
 

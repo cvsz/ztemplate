@@ -43,11 +43,15 @@ Report executive summary, verified findings/changes, validation evidence, releas
 
 ## Evidence states
 
-- `VERIFIED`
-- `PARTIALLY VERIFIED`
-- `UNVERIFIED`
-- `BLOCKED`
-- `NOT APPLICABLE`
+Assign exactly one state to each claim or gate:
+
+- `VERIFIED`: direct, current, environment-appropriate evidence fully supports the exact claim and all required acceptance criteria for that claim.
+- `PARTIALLY VERIFIED`: direct evidence supports only a proper subset of the claim or acceptance criteria; at least one required part remains unverified. This is never equivalent to `VERIFIED`.
+- `UNVERIFIED`: the claim is applicable, but sufficient direct evidence has not been obtained. Use this when validation has not been run, evidence is missing/stale/environment-mismatched, or the check was skipped by choice rather than prevented.
+- `BLOCKED`: the claim is applicable and verification cannot currently be completed because a concrete external prerequisite or constraint prevents it, such as missing permission, unavailable secret/environment, provider outage, inaccessible dependency, or unresolved prerequisite failure.
+- `NOT APPLICABLE`: the claim or gate does not apply to the scoped system/environment; record the reason.
+
+Decision rule: first determine applicability. If not applicable, use `NOT APPLICABLE`. Otherwise, if verification is prevented by a concrete blocker, use `BLOCKED`. If not blocked but sufficient evidence is absent, use `UNVERIFIED`. If evidence covers only part of the required claim, use `PARTIALLY VERIFIED`. Use `VERIFIED` only when the exact claim is fully evidenced.
 
 Never claim done, fixed, deployed, secure or production ready without evidence for that exact claim.
 
@@ -77,7 +81,7 @@ Distinguish local, test, CI, integration, staging, production-equivalent and pro
 
 Production readiness is an evidence-backed assessment across applicable security, reliability, data integrity, CI/CD, reproducibility, observability, backup/restore, DR, rollback, performance, capacity, documentation, incident response, ownership and compliance dimensions. Green CI alone is insufficient.
 
-Risk acceptance and release authorization are separate from readiness evidence. An authorized owner may choose to release with known risk, but accepted risk must not upgrade an `UNVERIFIED` or `BLOCKED` gate or be used to claim production readiness without direct evidence.
+Risk acceptance and release authorization are separate from readiness evidence. An authorized owner may choose to release with known risk, but accepted risk must not upgrade a `PARTIALLY VERIFIED`, `UNVERIFIED`, or `BLOCKED` gate or be used to claim production readiness without direct evidence.
 
 ## Final rule
 

@@ -20,7 +20,7 @@ All harness-specific files must preserve these invariants:
 - unrelated work is preserved
 - secrets are never exposed
 - security controls are not bypassed to obtain green CI
-- evidence states have the same meaning across harnesses
+- evidence states use the single canonical definitions and decision rule in `ZEAZ-INTRODUCTION.md` across all harnesses
 - implementation, verification, deployment, and production readiness remain distinct
 - destructive or production-impacting changes require appropriate authorization
 
@@ -33,5 +33,5 @@ When changing any harness-facing file:
 1. Compare it with `AGENTS.md` and `ZEAZ-INTRODUCTION.md`.
 2. Confirm no precedence inversion exists.
 3. Confirm no harness grants broader destructive authority.
-4. Confirm evidence-state semantics remain identical.
+4. Confirm evidence-state semantics defer to the canonical definitions in `ZEAZ-INTRODUCTION.md` without local reinterpretation.
 5. Confirm task playbook links remain valid.

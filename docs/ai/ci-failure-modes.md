@@ -55,4 +55,4 @@ Record:
 - full validation
 - remaining uncertainty
 
-If the failure depends on unavailable secrets, protected environments, hosted permissions, or an external outage, mark it `BLOCKED` or `UNVERIFIED` rather than fabricating success.
+Apply the central evidence-state definitions in `../../ZEAZ-INTRODUCTION.md`. If verification cannot proceed because an unavailable secret, protected environment, missing hosted permission, external outage, or other concrete prerequisite prevents it, use `BLOCKED`. If the check simply has not been run or sufficient evidence has not been collected and no concrete blocker prevents execution, use `UNVERIFIED`. Never fabricate success.
