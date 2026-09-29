@@ -39,6 +39,17 @@ Project initialization edits only README.md, ABOUT.md, CODEOWNERS, and issue sec
 - Makefile task entrypoints
 - Cloudflare and Terraform ownership contract
 
+## AI engineering execution layer
+
+This template includes a reusable cross-agent operating framework:
+
+- [ZEAZ engineering execution framework](ZEAZ-INTRODUCTION.md)
+- [Repository agent contract](AGENTS.md)
+- [Claude Code instructions](CLAUDE.md)
+- [Reusable AI playbooks and prompts](docs/ai/README.md)
+
+These files provide operating guidance; they are not evidence that a generated application is production ready.
+
 ## Agent review skill
 
 The reusable [Scrutinize skill](.agents/skills/scrutinize/SKILL.md) provides outsider-perspective reviews of plans, pull requests, diffs, and proposed code changes. It questions the need for the change, traces the actual end-to-end path, checks claimed behavior against evidence, and reports minimal actionable fixes. The repository's [agent contract](AGENTS.md) directs compatible agents to apply this approach on `/scrutinize` and review/audit requests; slash-command availability depends on the agent host.

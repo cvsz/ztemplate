@@ -57,3 +57,12 @@ Report vulnerabilities through SECURITY.md, not public issues. Security-related 
 
 ## Nested AGENTS.md
 Add a child AGENTS.md only when a subtree has durable rules that differ from this contract. The nearest AGENTS.md may add stricter local requirements but must not weaken repository-wide security rules.
+
+
+## ZEAZ reusable execution layer
+
+- Use [ZEAZ-INTRODUCTION.md](ZEAZ-INTRODUCTION.md) as the cross-agent execution framework.
+- Use [docs/ai/README.md](docs/ai/README.md) to select task-specific reusable prompts and playbooks.
+- Task playbooks are additive and never weaken this repository contract or narrower subtree rules.
+- Use evidence states `VERIFIED`, `PARTIALLY VERIFIED`, `UNVERIFIED`, `BLOCKED`, and `NOT APPLICABLE`.
+- Keep implementation, verification, deployment, and production readiness as distinct states.
