@@ -49,6 +49,7 @@ This template includes a reusable cross-agent operating framework:
 - [OpenCode instructions](OPENCODE.md)
 - [Reusable AI playbooks and prompts](docs/ai/README.md)
 - [ECC integration](docs/ai/ecc-integration.md)
+- [ZEAZ skills catalog](skills/README.md)
 
 These files provide operating guidance; they are not evidence that a generated application is production ready.
 

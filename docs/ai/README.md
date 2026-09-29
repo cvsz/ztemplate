@@ -8,6 +8,7 @@
 
 ## Compatibility and operating controls
 - [ECC integration](ecc-integration.md)
+- [Skill catalog architecture](skill-catalog-architecture.md)
 - [Cross-harness compatibility](harness-compatibility.md)
 - [Cost and token budget](cost-token-budget.md)
 
