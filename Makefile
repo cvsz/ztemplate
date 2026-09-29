@@ -6,6 +6,7 @@ help:
 	@printf '%s\n' 'Template: validate-template' 'Project (configure before use): setup format lint test build security ci' 'Bootstrap: python3 scripts/bootstrap.py --help'
 
 validate-template:
+	python3 scripts/validate_repo.py
 	python3 -m unittest discover -s tests -v
 
 setup format lint test build security:
