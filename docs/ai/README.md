@@ -17,6 +17,7 @@
 - [SaaS Release](saas-release.md)
 - [Kubernetes](kubernetes.md)
 - [GitHub PR / CI Recovery](github-pr-ci-recovery.md)
+- [CI Failure Modes](ci-failure-modes.md)
 - [Autonomous Repository Upgrade](autonomous-repo-upgrade.md)
 
 ## Reusable prompts

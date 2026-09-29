@@ -46,6 +46,7 @@ This template includes a reusable cross-agent operating framework:
 - [ZEAZ engineering execution framework](ZEAZ-INTRODUCTION.md)
 - [Repository agent contract](AGENTS.md)
 - [Claude Code instructions](CLAUDE.md)
+- [OpenCode instructions](OPENCODE.md)
 - [Reusable AI playbooks and prompts](docs/ai/README.md)
 
 These files provide operating guidance; they are not evidence that a generated application is production ready.
@@ -95,6 +96,7 @@ for the owning repository's pull request to merge.
   SUPPORT.md
 docs/
   adr/
+  ai/
   architecture.md
   development.md
   release.md
@@ -102,6 +104,10 @@ docs/
 .editorconfig
 .gitattributes
 .gitignore
+AGENTS.md
+CLAUDE.md
+OPENCODE.md
+ZEAZ-INTRODUCTION.md
 CHANGELOG.md
 CODE_OF_CONDUCT.md
 Dockerfile
