@@ -7,7 +7,7 @@ Repository files alone cannot enforce GitHub branch protection or repository-lev
 The repository includes an idempotent helper:
 
 ```bash
-python3 scripts/github_admin.py
+python3 scripts/github_admin.py --repo OWNER/REPO
 ```
 
 The default invocation is dry-run only.
@@ -15,13 +15,13 @@ The default invocation is dry-run only.
 Apply and immediately verify:
 
 ```bash
-python3 scripts/github_admin.py --apply
+python3 scripts/github_admin.py --repo OWNER/REPO --apply
 ```
 
 Verify without mutation:
 
 ```bash
-python3 scripts/github_admin.py --verify
+python3 scripts/github_admin.py --repo OWNER/REPO --verify
 ```
 
 Requirements:
@@ -29,6 +29,9 @@ Requirements:
 - GitHub CLI (`gh`)
 - `gh auth login`
 - repository Administration permission
+- an explicit `--repo OWNER/REPO` target; the helper has no repository default
+
+Before updating classic branch protection, the helper reads the current settings and retains existing required checks, push restrictions, review counts, reviewer/bypass actors, linear-history and branch-lock settings. It then adds the template baseline. If the existing protection response contains an actor it cannot identify, the helper stops before applying changes.
 
 ## Enforced policy
 
