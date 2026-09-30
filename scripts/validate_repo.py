@@ -34,7 +34,11 @@ REQUIRED_PATHS = (
     "plugins.d/zeaz-skills.yml",
     "ecc-install.json",
     "scripts/github_admin.py",
+    "scripts/__init__.py",
+    "scripts/check_tracked_secrets.py",
     "docs/ai/guides/github-repository-admin.md",
+    "tests/test_github_admin.py",
+    "tests/test_check_tracked_secrets.py",
 )
 
 LINK_RE = re.compile(r"(?<!!)\[[^\]]*\]\(([^)]+)\)")

@@ -37,7 +37,7 @@ See the complete [startup guide](docs/startup.md).
 - CODEOWNERS and governance guidance
 - Security and support policies
 - CI repository-baseline validation
-- CodeQL security scanning
+- CodeQL security scanning for GitHub Actions workflows and repository Python code
 - Dependency Review
 - Dependabot configuration
 - Immutable SHA pinning for baseline GitHub Actions
@@ -54,7 +54,7 @@ See the complete [startup guide](docs/startup.md).
 
 ## Repository administration gate
 
-`scripts/github_admin.py` is dry-run by default.
+`scripts/github_admin.py` is dry-run by default and requires an explicit repository target so a generated project cannot accidentally administer the source template.
 
 Apply and verify:
 

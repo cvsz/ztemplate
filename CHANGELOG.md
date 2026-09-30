@@ -26,11 +26,15 @@ The format follows Keep a Changelog conventions; generated projects should adopt
 - Expanded CODEOWNERS coverage for repository policy, AI, ECC, skills, components, and plugin manifests.
 - Clarified that release-note configuration is not an artifact-publishing workflow.
 - Documented branch/security administration as an explicit evidence gate rather than a documentation-only checklist.
+- Expanded CodeQL coverage to the repository's Python tooling and extended CI YAML parsing to component and plugin manifests.
 
 ### Fixed
 
 - Corrected generated README link validation so template links are resolved from their generated root location.
 - Removed stale wording that could imply green CI or configuration files alone establish production readiness.
+- Made GitHub administration require an explicit target repository and preserve existing protected-branch checks and restrictions when applying the baseline.
+- Added tracked secret-filename detection for `.env.*` files while retaining the documented `.env.example` exception.
+- Made the CI test import path explicit so discovery works consistently across Python versions.
 
 ### Security
 
