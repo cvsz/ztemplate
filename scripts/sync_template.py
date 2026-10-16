@@ -36,6 +36,14 @@ def main():
         parser.error("Run from the repository root")
     state = json.loads(STATE.read_text(encoding="utf-8")) if STATE.exists() else {}
     previous = state.get("source_ref", INITIAL_BASELINE)
+    try:
+        resolved = subprocess.check_output(
+            ["git", "ls-remote", f"https://github.com/{ORIGIN}.git", f"refs/heads/{args.source_ref}"],
+            text=True, timeout=30,
+        ).split()[0]
+    except (subprocess.CalledProcessError, subprocess.TimeoutExpired, IndexError) as exc:
+        print(f"ERROR: Cannot resolve template source ref: {exc}", file=sys.stderr)
+        return 2
     changed = []
     skipped = []
     for filename in MANAGED:
@@ -45,7 +53,7 @@ def main():
             skipped.append(f"{filename}: symlink path")
             continue
         try:
-            latest = get_text(args.source_ref, filename)
+            latest = get_text(resolved, filename)
             baseline = get_text(previous, filename)
         except (urllib.error.URLError, UnicodeError) as exc:
             print(f"ERROR: Cannot retrieve upstream {filename}: {exc}", file=sys.stderr)
@@ -71,9 +79,9 @@ def main():
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(content, encoding="utf-8")
         print(f"UPDATED: {path}")
-    if changed or previous != args.source_ref:
+    if changed or previous != resolved:
         STATE.parent.mkdir(parents=True, exist_ok=True)
-        STATE.write_text(json.dumps({"source_ref": args.source_ref}, indent=2) + "\n", encoding="utf-8")
+        STATE.write_text(json.dumps({"source_ref": resolved}, indent=2) + "\n", encoding="utf-8")
     print(f"Template sync: {len(changed)} files updated")
     return 0
 
