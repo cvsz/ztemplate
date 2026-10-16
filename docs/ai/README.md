@@ -14,6 +14,7 @@
 - [Skill catalog architecture](guides/skill-catalog-architecture.md)
 - [Cross-harness compatibility](guides/harness-compatibility.md)
 - [Cost and token budget](guides/cost-token-budget.md)
+- [Automatic template update PRs](guides/template-auto-update.md)
 - [Repository rollout](../repository-rollout.md)
 
 ## Playbooks
@@ -29,6 +30,7 @@
 
 ## Reusable prompts
 
+- [Universal Autonomous Engineering Master Prompt](prompts/universal-autonomous-engineering.md) — repository-agnostic audit, implementation, verification, and governed delivery.
 - [Repository execution](prompts/repository.md)
 - [Code review](prompts/code-review.md)
 - [Architecture review](prompts/architecture.md)
