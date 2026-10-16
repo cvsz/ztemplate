@@ -29,6 +29,7 @@
 
 ## Reusable prompts
 
+- [Universal Autonomous Engineering Master Prompt](prompts/universal-autonomous-engineering.md) — repository-agnostic audit, implementation, verification, and governed delivery.
 - [Repository execution](prompts/repository.md)
 - [Code review](prompts/code-review.md)
 - [Architecture review](prompts/architecture.md)
