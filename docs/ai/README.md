@@ -14,6 +14,7 @@
 - [Skill catalog architecture](guides/skill-catalog-architecture.md)
 - [Cross-harness compatibility](guides/harness-compatibility.md)
 - [Cost and token budget](guides/cost-token-budget.md)
+- [Automatic template update PRs](guides/template-auto-update.md)
 - [Repository rollout](../repository-rollout.md)
 
 ## Playbooks
