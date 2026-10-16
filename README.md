@@ -51,6 +51,7 @@ See the complete [startup guide](docs/startup.md).
 - Cloudflare/Terraform ownership contract
 - Cross-agent ZEAZ engineering execution layer
 - Reusable skill/catalog structure
+- Opt-in safe weekly template-update PRs for generated repositories
 
 ## Repository administration gate
 
