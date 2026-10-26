@@ -3,12 +3,12 @@
 # Requires: gh, git, jq, and authenticated access to the target repositories.
 set -euo pipefail
 
-OWNER="\${OWNER:-cvsz}"
-REVIEWER="\${REVIEWER:-}"
-APPLY="\${APPLY:-0}"
+OWNER="${OWNER:-cvsz}"
+REVIEWER="${REVIEWER:-}"
+APPLY="${APPLY:-0}"
 WORKFLOW=".github/workflows/request-independent-review.yml"
 BRANCH="chore/independent-review-governance"
-SCRIPT_ROOT="$(cd -- "$(dirname -- "\${BASH_SOURCE[0]}")/.." && pwd)"
+SCRIPT_ROOT="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)"
 SOURCE_WORKFLOW="$SCRIPT_ROOT/$WORKFLOW"
 TMP="$(mktemp -d)"
 trap 'rm -rf "$TMP"' EXIT
@@ -21,7 +21,7 @@ if ! [[ "$REVIEWER" =~ ^[A-Za-z0-9-]+$ ]]; then
   echo "ERROR: Set REVIEWER to a valid, independent GitHub login." >&2
   exit 2
 fi
-if [[ "\${REVIEWER,,}" == "\${OWNER,,}" ]]; then
+if [[ "${REVIEWER,,}" == "${OWNER,,}" ]]; then
   echo "ERROR: REVIEWER must differ from OWNER." >&2
   exit 2
 fi
