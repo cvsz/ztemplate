@@ -20,8 +20,8 @@ jobs:
     steps:
       - name: Validate reviewer configuration
         env:
-          REVIEWER: \${{ vars.INDEPENDENT_REVIEWER }}
-          PR_AUTHOR: \${{ github.event.pull_request.user.login }}
+          REVIEWER: ${{ vars.INDEPENDENT_REVIEWER }}
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
         shell: bash
         run: |
           set -euo pipefail
@@ -29,16 +29,16 @@ jobs:
             echo "::error::Set repository variable INDEPENDENT_REVIEWER to a valid GitHub login."
             exit 1
           fi
-          if [[ "\${REVIEWER,,}" == "\${PR_AUTHOR,,}" ]]; then
+          if [[ "${REVIEWER,,}" == "${PR_AUTHOR,,}" ]]; then
             echo "::error::The independent reviewer must not be the pull request author."
             exit 1
           fi
       - name: Request independent review idempotently
         env:
-          GH_TOKEN: \${{ github.token }}
-          GH_REPO: \${{ github.repository }}
-          PR_NUMBER: \${{ github.event.pull_request.number }}
-          REVIEWER: \${{ vars.INDEPENDENT_REVIEWER }}
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          REVIEWER: ${{ vars.INDEPENDENT_REVIEWER }}
         shell: bash
         run: |
           set -euo pipefail
@@ -58,8 +58,8 @@ jobs:
     steps:
       - name: Validate reviewer configuration
         env:
-          REVIEWER: \${{ vars.INDEPENDENT_REVIEWER }}
-          PR_AUTHOR: \${{ github.event.pull_request.user.login }}
+          REVIEWER: ${{ vars.INDEPENDENT_REVIEWER }}
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
         shell: bash
         run: |
           set -euo pipefail
@@ -67,18 +67,18 @@ jobs:
             echo "::error::Repository variable INDEPENDENT_REVIEWER is missing or invalid."
             exit 1
           fi
-          if [[ "\${REVIEWER,,}" == "\${PR_AUTHOR,,}" ]]; then
+          if [[ "${REVIEWER,,}" == "${PR_AUTHOR,,}" ]]; then
             echo "::error::Independent approval cannot come from the pull request author."
             exit 1
           fi
       - name: Require approval for the exact current head
         env:
-          GH_TOKEN: \${{ github.token }}
-          GH_REPO: \${{ github.repository }}
-          PR_NUMBER: \${{ github.event.pull_request.number }}
-          HEAD_SHA: \${{ github.event.pull_request.head.sha }}
-          PR_AUTHOR: \${{ github.event.pull_request.user.login }}
-          REVIEWER: \${{ vars.INDEPENDENT_REVIEWER }}
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_AUTHOR: ${{ github.event.pull_request.user.login }}
+          REVIEWER: ${{ vars.INDEPENDENT_REVIEWER }}
         shell: bash
         run: |
           set -euo pipefail
