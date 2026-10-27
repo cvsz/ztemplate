@@ -36,6 +36,12 @@ class IndependentReviewWorkflowTests(unittest.TestCase):
         self.assertIn("INDEPENDENT_REVIEWER", ROLLOUT)
         self.assertNotIn("REVIEWER:-policedbc", ROLLOUT)
 
+    def test_rollout_selects_user_or_organization_repository_endpoint(self):
+        self.assertIn("owner_type=", ROLLOUT)
+        self.assertIn("Organization)", ROLLOUT)
+        self.assertIn("orgs/$OWNER/repos?per_page=100&type=all", ROLLOUT)
+        self.assertIn("users/$OWNER/repos?per_page=100&type=owner", ROLLOUT)
+
 
 if __name__ == "__main__":
     unittest.main()
