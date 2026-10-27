@@ -34,7 +34,21 @@ if [[ ! -f "$SOURCE_WORKFLOW" ]]; then
   exit 2
 fi
 
-gh api --paginate "users/$OWNER/repos?per_page=100&type=owner" \
+owner_type="$(gh api "users/$OWNER" --jq '.type')"
+case "$owner_type" in
+  User)
+    repos_endpoint="users/$OWNER/repos?per_page=100&type=owner"
+    ;;
+  Organization)
+    repos_endpoint="orgs/$OWNER/repos?per_page=100&type=all"
+    ;;
+  *)
+    echo "ERROR: Unsupported GitHub owner type: $owner_type" >&2
+    exit 2
+    ;;
+esac
+
+gh api --paginate "$repos_endpoint" \
   --jq '.[] | [.full_name, .default_branch, .archived, .fork, .disabled, (.mirror_url // "")] | @tsv' |
 while IFS=$'\t' read -r repo base archived fork disabled mirror_url; do
   if [[ "$archived" == true || "$fork" == true || "$disabled" == true || -n "$mirror_url" ]]; then
