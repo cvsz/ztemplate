@@ -74,7 +74,7 @@ while IFS=$'\t' read -r repo base archived fork disabled mirror_url; do
   repo_dir="$TMP/repo"
   rm -rf "$repo_dir"
   mkdir -p "$repo_dir"
-  git clone --quiet --depth 1 --branch "$base" "https://github.com/$repo.git" "$repo_dir"
+  gh repo clone "$repo" "$repo_dir" -- --depth 1 --branch "$base"
   (
     cd "$repo_dir"
     git checkout -q -b "$BRANCH"
