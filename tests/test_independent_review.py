@@ -43,7 +43,7 @@ class IndependentReviewWorkflowTests(unittest.TestCase):
         self.assertIn('gh repo clone "$repo" "$repo_dir" -- --depth 1 --branch "$base"', ROLLOUT)
         self.assertNotIn('git clone --quiet --depth 1 --branch "$base" "https://github.com/$repo.git"', ROLLOUT)
 
-    def test_rollout_uses_authenticated_clone_for_private_repositories(self):
+    def test_rollout_executes_authenticated_clone_for_private_repository(self):
         with tempfile.TemporaryDirectory() as tmp:
             temp = Path(tmp)
             bin_dir = temp / "bin"
