@@ -36,6 +36,10 @@ class IndependentReviewWorkflowTests(unittest.TestCase):
         self.assertIn("INDEPENDENT_REVIEWER", ROLLOUT)
         self.assertNotIn("REVIEWER:-policedbc", ROLLOUT)
 
+    def test_rollout_uses_authenticated_clone_for_private_repositories(self):
+        self.assertIn('gh repo clone "$repo" "$repo_dir" -- --depth 1 --branch "$base"', ROLLOUT)
+        self.assertNotIn('git clone --quiet --depth 1 --branch "$base" "https://github.com/$repo.git"', ROLLOUT)
+
     def test_rollout_selects_user_or_organization_repository_endpoint(self):
         self.assertIn("owner_type=", ROLLOUT)
         self.assertIn("Organization)", ROLLOUT)
