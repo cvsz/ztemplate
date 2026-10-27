@@ -42,6 +42,7 @@ Defer or handle separately:
 8. Pin Actions safely without changing behavior.
 9. Add/align repository validation where useful.
 10. Add GitHub administration verification using project-specific required check names.
+    For the independent-review workflow, configure the `INDEPENDENT_REVIEWER` repository variable and require the `verify-independent-approval` status check.
 11. Open a focused pull request.
 12. Run exact-head validation.
 13. Merge only after required checks/review succeed.

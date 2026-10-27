@@ -34,6 +34,9 @@ jobs:
             exit 1
           fi
 
+      - name: Validate rollout shell syntax
+        run: bash -n scripts/rollout-independent-review.sh
+
       - name: Validate YAML syntax
         shell: bash
         run: |

@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import re
 import subprocess
 import sys
 from typing import Any
@@ -19,6 +20,7 @@ REQUIRED_CHECKS = (
     "repository-baseline",
     "Analyze GitHub Actions",
     "dependency-review",
+    "verify-independent-approval",
 )
 
 
@@ -39,6 +41,30 @@ def gh_api(method: str, endpoint: str, payload: dict[str, Any] | None = None) ->
     if not proc.stdout.strip():
         return None
     return json.loads(proc.stdout)
+
+
+def validate_independent_reviewer(repo: str, reviewer: str) -> str:
+    if not reviewer or not re.fullmatch(r"[A-Za-z0-9-]+", reviewer):
+        raise ValueError("INDEPENDENT_REVIEWER must be a valid GitHub login.")
+    owner = repo.split("/", 1)[0]
+    if reviewer.casefold() == owner.casefold():
+        raise ValueError("INDEPENDENT_REVIEWER must differ from the repository owner.")
+    return reviewer
+
+
+def configured_independent_reviewer(repo: str) -> str | None:
+    response = gh_api("GET", f"repos/{repo}/actions/variables?per_page=100")
+    variable = next(
+        (
+            item
+            for item in response.get("variables", [])
+            if item.get("name") == "INDEPENDENT_REVIEWER"
+        ),
+        None,
+    )
+    if variable is None:
+        return None
+    return validate_independent_reviewer(repo, str(variable.get("value") or ""))
 
 
 def require_gh() -> None:
@@ -87,6 +113,7 @@ def print_plan(repo: str, branch: str) -> None:
     print("- require approval after the latest push")
     print("- require conversation resolution")
     print("- require branch to be up to date")
+    print("- require repository variable INDEPENDENT_REVIEWER with an independent GitHub login")
     print("- require checks:")
     for check in REQUIRED_CHECKS:
         print(f"  - {check}")
@@ -100,6 +127,13 @@ def print_plan(repo: str, branch: str) -> None:
 
 
 def apply(repo: str, branch: str) -> None:
+    reviewer = configured_independent_reviewer(repo)
+    if reviewer is None:
+        raise RuntimeError(
+            "Set repository Actions variable INDEPENDENT_REVIEWER to a valid independent "
+            "GitHub login before applying branch protection."
+        )
+
     gh_api("PUT", f"repos/{repo}/branches/{branch}/protection", protection_payload())
 
     gh_api("PUT", f"repos/{repo}/vulnerability-alerts")
@@ -128,6 +162,13 @@ def apply(repo: str, branch: str) -> None:
 
 def verify(repo: str, branch: str) -> list[str]:
     errors: list[str] = []
+
+    try:
+        reviewer = configured_independent_reviewer(repo)
+        if reviewer is None:
+            errors.append("repository Actions variable INDEPENDENT_REVIEWER is not configured")
+    except (RuntimeError, ValueError) as exc:
+        errors.append(f"independent reviewer configuration not verified: {exc}")
 
     protection = gh_api("GET", f"repos/{repo}/branches/{branch}/protection")
 
@@ -209,7 +250,11 @@ def main() -> int:
         return 0
 
     if args.apply:
-        apply(args.repo, args.branch)
+        try:
+            apply(args.repo, args.branch)
+        except (RuntimeError, ValueError) as exc:
+            print(f"\nAdministration apply failed: {exc}", file=sys.stderr)
+            return 1
         print("\nAdministration changes applied.")
 
     if args.verify or args.apply:
