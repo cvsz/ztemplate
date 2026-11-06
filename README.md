@@ -24,6 +24,7 @@ This repository is a **template foundation**, not a deployable application. A re
 5. Configure and verify repository administration controls from an authenticated GitHub admin identity:
 
    ```bash
+   gh variable set INDEPENDENT_REVIEWER --repo my-org/my-service --body reviewer-login
    python3 scripts/github_admin.py --repo my-org/my-service --apply
    ```
 
@@ -56,9 +57,12 @@ See the complete [startup guide](docs/startup.md).
 
 `scripts/github_admin.py` is dry-run by default.
 
+Set `INDEPENDENT_REVIEWER` to a valid GitHub login that is independent of the pull request author. The workflow's `verify-independent-approval` job checks that the latest review from this account approves the exact current head; make this status check required in branch protection.
+
 Apply and verify:
 
 ```bash
+gh variable set INDEPENDENT_REVIEWER --repo OWNER/REPO --body reviewer-login
 python3 scripts/github_admin.py --repo OWNER/REPO --apply
 ```
 

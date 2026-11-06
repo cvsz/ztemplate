@@ -41,6 +41,7 @@ python3 scripts/github_admin.py --repo my-org/my-service
 Apply and read back effective settings:
 
 ```bash
+gh variable set INDEPENDENT_REVIEWER --repo my-org/my-service --body reviewer-login
 python3 scripts/github_admin.py --repo my-org/my-service --apply
 ```
 
@@ -51,6 +52,8 @@ python3 scripts/github_admin.py --repo my-org/my-service --verify
 ```
 
 This step requires an authenticated `gh` identity with repository Administration permission.
+
+Before applying, set `INDEPENDENT_REVIEWER` to a valid GitHub login that is not the pull request author. The script requires the `verify-independent-approval` status check and verifies that the variable exists. Require that check in branch protection; a workflow job alone does not enforce a merge gate.
 
 Do not treat the presence of the script as proof that branch/security settings are enabled.
 
