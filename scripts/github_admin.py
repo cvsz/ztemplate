@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Configure and verify GitHub repository administration gates for ztemplate.
+"""Configure and verify GitHub repository administration gates.
 
 Dry-run is the default. Use --apply only with an authenticated gh CLI identity
 that has repository Administration permission.
@@ -13,7 +13,6 @@ import subprocess
 import sys
 from typing import Any
 
-DEFAULT_REPO = "cvsz/ztemplate"
 DEFAULT_BRANCH = "main"
 REQUIRED_CHECKS = (
     "repository-baseline",
@@ -30,8 +29,7 @@ def gh_api(method: str, endpoint: str, payload: dict[str, Any] | None = None) ->
         cmd,
         input=json.dumps(payload) if payload is not None else None,
         text=True,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
+        capture_output=True,
         check=False,
     )
     if proc.returncode != 0:
@@ -53,27 +51,92 @@ def require_gh() -> None:
         raise RuntimeError("GitHub CLI is not authenticated. Run: gh auth login")
 
 
-def protection_payload() -> dict[str, Any]:
+def _enabled(protection: dict[str, Any], setting: str, default: bool = False) -> bool:
+    value = protection.get(setting)
+    if isinstance(value, dict):
+        return value.get("enabled") is True
+    return value is True if value is not None else default
+
+
+def _actor_names(value: Any, field: str) -> list[str]:
+    if value is None:
+        return []
+    if not isinstance(value, dict):
+        raise TypeError(f"cannot safely preserve branch protection {field} settings")
+    name_field = {"users": "login", "teams": "slug", "apps": "slug"}[field]
+    names: list[str] = []
+    for actor in value.get(field) or []:
+        name = actor if isinstance(actor, str) else actor.get(name_field) if isinstance(actor, dict) else None
+        if not isinstance(name, str) or not name:
+            raise ValueError(f"cannot safely preserve branch protection {field} entry")
+        names.append(name)
+    return sorted(set(names))
+
+
+def _actor_restrictions(value: Any) -> dict[str, list[str]]:
+    return {field: _actor_names(value, field) for field in ("users", "teams", "apps")}
+
+
+def _preserved_checks(existing: dict[str, Any]) -> dict[str, Any]:
+    contexts = set(existing.get("contexts") or [])
+    checks = existing.get("checks") or []
+    status: dict[str, Any] = {"strict": True}
+
+    if checks:
+        merged: dict[tuple[str, int | None], dict[str, Any]] = {}
+        for check in checks:
+            if not isinstance(check, dict) or not isinstance(check.get("context"), str):
+                raise TypeError("cannot safely preserve an unrecognized required status check")
+            item = {"context": check["context"]}
+            app_id = check.get("app_id")
+            if app_id is not None and type(app_id) is not int:
+                raise TypeError("cannot safely preserve required status check app restriction")
+            if type(app_id) is int:
+                item["app_id"] = check["app_id"]
+            merged[(item["context"], app_id)] = item
+        existing_contexts = {item["context"] for item in merged.values()}
+        for context in contexts | set(REQUIRED_CHECKS):
+            if context not in existing_contexts:
+                merged[(context, None)] = {"context": context}
+        status["checks"] = sorted(merged.values(), key=lambda check: check["context"])
+    else:
+        status["contexts"] = sorted(contexts | set(REQUIRED_CHECKS))
+    return status
+
+
+def protection_payload(existing: dict[str, Any] | None = None) -> dict[str, Any]:
+    """Build the required baseline while preserving stricter existing settings."""
+    existing = existing or {}
+    existing_checks = existing.get("required_status_checks") or {}
+    existing_reviews = existing.get("required_pull_request_reviews") or {}
+    review_count = existing_reviews.get("required_approving_review_count") or 0
+
+    reviews: dict[str, Any] = {
+        "dismiss_stale_reviews": True,
+        "require_code_owner_reviews": True,
+        "required_approving_review_count": max(1, int(review_count)),
+        "require_last_push_approval": True,
+    }
+    for field in ("dismissal_restrictions", "bypass_pull_request_allowances"):
+        restrictions = existing_reviews.get(field)
+        actors = _actor_restrictions(restrictions)
+        # Empty actor lists carry no policy; omitting them works for personal and org repos.
+        if any(actors.values()):
+            reviews[field] = actors
+
+    restrictions = existing.get("restrictions")
     return {
-        "required_status_checks": {
-            "strict": True,
-            "contexts": list(REQUIRED_CHECKS),
-        },
+        "required_status_checks": _preserved_checks(existing_checks),
         "enforce_admins": True,
-        "required_pull_request_reviews": {
-            "dismiss_stale_reviews": True,
-            "require_code_owner_reviews": True,
-            "required_approving_review_count": 1,
-            "require_last_push_approval": True,
-        },
-        "restrictions": None,
-        "required_linear_history": False,
+        "required_pull_request_reviews": reviews,
+        "restrictions": _actor_restrictions(restrictions) if restrictions is not None else None,
+        "required_linear_history": _enabled(existing, "required_linear_history"),
         "allow_force_pushes": False,
         "allow_deletions": False,
-        "block_creations": False,
+        "block_creations": _enabled(existing, "block_creations"),
         "required_conversation_resolution": True,
-        "lock_branch": False,
-        "allow_fork_syncing": True,
+        "lock_branch": _enabled(existing, "lock_branch"),
+        "allow_fork_syncing": _enabled(existing, "allow_fork_syncing"),
     }
 
 
@@ -100,7 +163,14 @@ def print_plan(repo: str, branch: str) -> None:
 
 
 def apply(repo: str, branch: str) -> None:
-    gh_api("PUT", f"repos/{repo}/branches/{branch}/protection", protection_payload())
+    endpoint = f"repos/{repo}/branches/{branch}/protection"
+    try:
+        existing_protection = gh_api("GET", endpoint)
+    except RuntimeError as exc:
+        if "HTTP 404" not in str(exc):
+            raise
+        existing_protection = None
+    gh_api("PUT", endpoint, protection_payload(existing_protection))
 
     gh_api("PUT", f"repos/{repo}/vulnerability-alerts")
     gh_api("PUT", f"repos/{repo}/automated-security-fixes")
@@ -131,9 +201,9 @@ def verify(repo: str, branch: str) -> list[str]:
 
     protection = gh_api("GET", f"repos/{repo}/branches/{branch}/protection")
 
-    contexts = set(
-        (protection.get("required_status_checks") or {}).get("contexts") or []
-    )
+    status_checks = protection.get("required_status_checks") or {}
+    contexts = set(status_checks.get("contexts") or [])
+    contexts.update(check.get("context") for check in status_checks.get("checks") or [] if check.get("context"))
     missing_checks = sorted(set(REQUIRED_CHECKS) - contexts)
     if missing_checks:
         errors.append(f"missing required status checks: {', '.join(missing_checks)}")
@@ -195,7 +265,7 @@ def verify(repo: str, branch: str) -> list[str]:
 
 def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--repo", default=DEFAULT_REPO)
+    parser.add_argument("--repo", required=True, metavar="OWNER/REPO", help="target repository (required)")
     parser.add_argument("--branch", default=DEFAULT_BRANCH)
     parser.add_argument("--apply", action="store_true", help="apply administration changes")
     parser.add_argument("--verify", action="store_true", help="verify effective settings")
