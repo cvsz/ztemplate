@@ -16,6 +16,7 @@ REQUIRED_PATHS = (
     "AGENTS.md",
     "CLAUDE.md",
     "OPENCODE.md",
+    "GEMINI.md",
     "ZEAZ-INTRODUCTION.md",
     "CONTRIBUTING.md",
     "SECURITY.md",
